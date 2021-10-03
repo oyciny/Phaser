@@ -6,6 +6,7 @@ server.on('listening', () => {
 })
 
 server.on('request', (req, send, client) => {
+    console.log(req.header.id, req.questions[0])
     const response = Packet.createResponseFromRequest(req)
     const [ question ] = req.questions
     const { name } = question
