@@ -1,7 +1,7 @@
 const server = require('./config/server')
 const { Packet } = require('dns2')
 
-server.on('request', (req, send, res) => {
+server.on('request', (req, send, client) => {
     console.log(req.header.id, req.questions[0])
     const response = Packet.createResponseFromRequest(req)
     const [ question ] = req.questions
@@ -20,7 +20,8 @@ server.on('request', (req, send, res) => {
     const closed = new Promise(resolve => process.on("SIGINT", resolve))
     await server.listen({
         doh: 443,
-        udp: 53
+        udp: 53,
+        tcp: 54
     })
     console.log("Listening for requests")
     console.log(server.addresses())
