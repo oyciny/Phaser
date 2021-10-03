@@ -10,10 +10,11 @@ const { TCPClient, Packet } = require('dns2')
     console.log("Listening for requests")
     console.log(server.addresses())
 
+    let resolve = TCPClient({ dns: '1.1.1.1' })
+    let result = await resolve(res.questions[0].name)
+
     server.on('request', (req, send, res) => {
         console.log(req.header.id, req.questions[0])
-        let resolve = TCPClient({ dns: '1.1.1.1' })
-        let response = await resolve(res.questions[0].name)
         const response = Packet.createResponseFromRequest(req)
         const [ question ] = req.questions
         const { name } = question
@@ -22,7 +23,7 @@ const { TCPClient, Packet } = require('dns2')
             type: Packet.TYPE.A,
             class: Packet.CLASS.IN,
             ttl: 300,
-            address: response.answers.address
+            address: result.answers.address
         })
         send(response)
     })
