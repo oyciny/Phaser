@@ -1,27 +1,14 @@
-const connect = require('connect')
 const fs = require('fs')
-const { createSecureServer } = require('http2')
-const DoH = require('./playdoh')
-const app = connect()
+const path = require('path')
+const dns2 = require('dns2')
+const { port } = require('./vars')
 
-const options = {
-    key: fs.readFileSync('server-key.pem'),
-    cert: fs.readFileSync('server-cert.pem')
-}
-
-app.use(DoH)
-
-app.use((req, res, next) => {
-    console.log(`${req.protocol}://${req.headers.host}${req.originalUrl}`)
-    next()
+const server = dns2.createDOHServer({
+    port: port,
+    ssl: true,
+    cert: fs.readFileSync(path.join(__dirname, '../../server-cert.pem')),
+    key: fs.readFileSync(path.join(__dirname, '../../server-key.pem'))
 })
-
-app.use('/*', async (req, res) => {
-    console.log('request: ')
-    res.end('')
-})
-
-const server = createSecureServer(options, app)
 
 module.exports = server
 
