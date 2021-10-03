@@ -24,4 +24,7 @@ server.on('close', () => {
     console.log('Phaser stopped')
 })
 
-server.listen()
+server.listen({
+    udp: 53,
+    doh: 443
+})
