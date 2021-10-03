@@ -13,7 +13,7 @@ server.on('request', async (req, send, client) => {
     const resolve = TCPClient({
         dns: '1.1.1.1'
     })
-    const result = await resolve(client.questions[0].name)
+    const result = await resolve(name)
     response.answers.push({
         name,
         type: Packet.TYPE.A,
