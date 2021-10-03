@@ -24,4 +24,6 @@ server.on('close', () => {
     console.log('Phaser stopped')
 })
 
-server.listen()
+server.listen({
+    port: 53
+})
