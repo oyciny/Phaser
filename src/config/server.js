@@ -5,6 +5,7 @@ const { port } = require('./vars')
 
 const server = dns2.createServer({
     udp: true,
+    tcp: true,
     doh: {
         ssl: true,
         cert: fs.readFileSync(path.join(__dirname, '../../server-cert.pem')),

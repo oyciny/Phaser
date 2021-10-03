@@ -11,7 +11,7 @@ server.on('request', (req, send, res) => {
         type: Packet.TYPE.A,
         class: Packet.CLASS.IN,
         ttl: 300,
-        address: result.answers.address
+        address: '1.1.1.1'
     })
     send(response)
 })
