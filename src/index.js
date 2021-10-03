@@ -1,10 +1,6 @@
 const server = require('./config/server')
 const { Packet } = require('dns2')
 
-server.on('listening', () => {
-    console.log('Phaser server listening')
-})
-
 server.on('request', (req, send, client) => {
     console.log(req.header.id, req.questions[0])
     const response = Packet.createResponseFromRequest(req)
@@ -20,11 +16,16 @@ server.on('request', (req, send, client) => {
     send(response)
 })
 
-server.on('close', () => {
-    console.log('Phaser stopped')
-})
-
-server.listen({
-    udp: 53,
-    doh: 443
+(async () => {
+    const closed = new Promise(resolve => process.on("SIGINT", resolve))
+    await server.listen({
+        doh: 443,
+        udp: 53
+    })
+    console.log("Listening for requests")
+    console.log(server.addresses())
+    await closed
+    process.stdout.write('\n')
+    await server.close()
+    console.log("Server closed")
 })
