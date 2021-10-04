@@ -1,5 +1,5 @@
 const server = require('./config/server')
-const request = require('./helpers/request.handler')
+const { getResponse } = require('./helpers/request.handler')
 
 server.on("listening", () => {
     console.log("Phaser is listening")
@@ -7,7 +7,7 @@ server.on("listening", () => {
 
 server.on('request', async (req, send, client) => {
     console.log(req.header.id, req.questions[0])
-    const response = request(req)
+    const response = getResponse(req)
     send(response)
 })
 
