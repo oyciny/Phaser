@@ -20,7 +20,7 @@ server.on('request', async (req, send, client) => {
     const [ question ] = req.questions
     const { name } = question
 
-    let tlds = fs.readFileSync(path.join(__dirname, "../../icann_domains.txt")).toString()
+    let tlds = fs.readFileSync(path.join(__dirname, "../icann_domains.txt")).toString()
     tlds = tlds.split("\n").slice(1)
     
     if (tlds.indexOf(name.split('.').pop().split('/')[0].toUpperCase()) >= 0) {
