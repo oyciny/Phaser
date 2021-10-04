@@ -10,9 +10,8 @@ server.on('request', async (req, send, client) => {
     const response = Packet.createResponseFromRequest(req)
     const [ question ] = req.questions
     const { name } = question
-    console.log(`${response}\n${question}\n${name}`)
     const resolve = TCPClient({ dns: '1.1.1.1' })
-    const result = await resolve(req.questions[0].name)
+    const result = await resolve(name)
     /*
     response.answers.push({
         name,
