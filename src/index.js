@@ -24,7 +24,7 @@ server.on('request', async (req, send, client) => {
 
     if (tlds.indexOf(name.split('.')[1].toUpperCase()) > -1) {
         const resolve = TCPClient({ dns: '1.1.1.1' })
-        const result = await resolve(name)
+        const result = await resolve(response.questions[0].name)
         response.answers = result.answers;
     } else {
         const handshake = name.slice(0, -1)
@@ -37,7 +37,7 @@ server.on('request', async (req, send, client) => {
                         let resolveHS = TCPClient({
                             dns: json.records[0].address
                         })
-                        let result = await resolveHS(name)
+                        let result = await resolveHS(response.questions[0].name)
                         response.answers = result.answers
                     }
                 }
