@@ -30,7 +30,9 @@ server.on('request', async (req, send, client) => {
         const handshake = name.slice(0, -1)
         console.log(handshake)
         const child = spawn('/root/hsd/bin/hsd-cli', ['rpc', 'getnameresource', handshake])
-        console.log(child)
+        child.stdout.on('data', async (data) => {
+            console.log(data)
+        })
     }
 
     send(response)
