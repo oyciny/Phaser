@@ -22,7 +22,7 @@ server.on('request', async (req, send, client) => {
     let tlds = fs.readFileSync(path.join(__dirname, "../icann_domains.txt")).toString()
     tlds = tlds.split("\n").slice(1)
 
-    if (tlds.indexOf(name.split('.')[1].toUpperCase()) > -1) {
+    if (tlds.indexOf(name.split('.').pop().split('/')[0].toUpperCase()) > -1) {
         const resolve = TCPClient({ dns: '1.1.1.1' })
         const result = await resolve(response.questions[0].name)
         response.answers = result.answers;
