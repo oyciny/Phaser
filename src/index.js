@@ -31,7 +31,18 @@ server.on('request', async (req, send, client) => {
         console.log(handshake)
         const child = spawn('/root/hsd/bin/hsd-cli', ['rpc', 'getnameresource', handshake])
         child.stdout.on('data', async (data) => {
-            console.log(data)
+            if (data.toString()[0] != 'I') {
+                let json = JSON.parse(data.toString())
+                if (typeof json == 'object' && json != null) {
+                    if (typeof json.records == 'object') {
+                        let resolveHS = TCPClient({
+                            dns: json.records[0].address
+                        })
+                        let result = await resolveHS(name)
+                        response.answers = response.answers.concat(result.answers)
+                    }
+                }
+            }
         })
     }
 
