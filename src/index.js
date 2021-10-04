@@ -7,6 +7,7 @@ const { spawn } = require('child_process')
 
 server.on("listening", () => {
     console.log("Phaser is listening")
+    fetchICANN()
     setInterval(fetchICANN, 1000 * 60 * 60 * 24)
 })
 
