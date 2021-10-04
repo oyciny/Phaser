@@ -12,16 +12,17 @@ server.on('request', async (req, send, client) => {
     const { name } = question
     const resolve = TCPClient({ dns: '1.1.1.1' })
     const result = await resolve(name)
+    console.log(result, result.address, result.answers.address)
     /*
     response.answers.push({
         name,
         type: Packet.TYPE.A,
         class: Packet.CLASS.IN,
         ttl: 300,
-        address: result.answers.address
+        address: result.address
     })
     */
-    send(result)
+    send(response)
 })
 
 server.on('close', () => {
