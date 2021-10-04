@@ -14,6 +14,7 @@ const server = dns2.createServer({
         key: fs.readFileSync(path.join(__dirname, '../../server-key.pem'))
     },
     handle: async (req, send, client) => {
+        console.log(client)
         const response = Packet.createResponseFromRequest(req)
         const [ question ] = req.questions
         const { name } = question
