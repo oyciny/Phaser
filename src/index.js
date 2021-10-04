@@ -13,7 +13,7 @@ server.on("listening", () => {
 })
 
 server.on('request', async (req, send, client) => {
-    console.log(req.header.id, req.questions[0])
+    console.log(`ID: ${req.header.id} | Name: ${req.questions[0].name}`)
 
     const response = Packet.createResponseFromRequest(req)
     const [ question ] = req.questions
@@ -22,7 +22,7 @@ server.on('request', async (req, send, client) => {
     let tlds = fs.readFileSync(path.join(__dirname, "../icann_domains.txt")).toString()
     tlds = tlds.split("\n").slice(1)
     
-    if (tlds.indexOf(name.split('.')[1].toUpperCase()) >= 0) {
+    if (tlds.indexOf(name.split('.').pop().split('/')[0].toUpperCase()) >= 0) {
         const resolve = TCPClient({ dns: '1.1.1.1' })
         const result = await resolve(response.questions[0].name)
         response.answers = result.answers;
