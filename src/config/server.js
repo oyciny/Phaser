@@ -33,7 +33,6 @@ const server = dns2.createServer({
                     let json = JSON.parse(data.toString())
                     if (typeof json == 'object' && json != null) {
                         if (typeof json.records == 'object') {
-                            console.log(json.records[0])
                             let resolveHS = TCPClient({
                                 dns: json.records[0].address
                             })
