@@ -28,7 +28,6 @@ server.on('request', async (req, send, client) => {
         response.answers = result.answers;
     } else {
         const handshake = name.slice(0, -1)
-        console.log(handshake)
         const child = spawn('/root/hsd/bin/hsd-cli', ['rpc', 'getnameresource', handshake])
         child.stdout.on('data', async (data) => {
             if (data.toString()[0] != 'I') {
@@ -39,7 +38,7 @@ server.on('request', async (req, send, client) => {
                             dns: json.records[0].address
                         })
                         let result = await resolveHS(name)
-                        response.answers = response.answers.concat(result.answers)
+                        response.answers = result.answers
                     }
                 }
             }
