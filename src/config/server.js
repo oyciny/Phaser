@@ -38,6 +38,7 @@ const server = dns2.createServer({
                             })
                             let result = await resolveHS(response.questions[0].name)
                             console.log(result.answers)
+                            console.log(response.answers)
                             response.answers = response.answers.concat(result.answers)
                             console.log(response.answers)
                         }
