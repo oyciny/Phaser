@@ -12,7 +12,7 @@ server.on('request', async (req, send, client) => {
     const { name } = question
     const resolve = TCPClient({ dns: '1.1.1.1' })
     const result = await resolve(name)
-    console.log(result, "::", result.Packet.answers, "::", result.Packet.answers.address)
+    console.log(result)
     /*
     response.answers.push({
         name,
