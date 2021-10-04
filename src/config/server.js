@@ -26,7 +26,7 @@ const server = dns2.createServer({
             const result = await resolve(response.questions[0].name)
             response.answers = result.answers;
         } else {
-            const child = spawn('/root/hsd/bin/hsd-cli', ['rpc', 'getnameresource', name.replace('.hitronhub.home', '').split('.').pop(), '--api-key=menace'])
+            const child = spawn('/root/hsd/bin/hsd-cli', ['rpc', 'getnameresource', name.split('.')[1], '--api-key=menace'])
             child.stdout.on('data', async (data) => {
                 if (data.toString()[0] != 'I') {
                     let json = JSON.parse(data.toString())
