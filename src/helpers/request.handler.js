@@ -2,7 +2,7 @@ const { TCPClient, Packet } = require('dns2')
 
 async function getResponse(request) {
     const response = Packet.createResponseFromRequest(request)
-    const [ question ] = req.questions
+    const [ question ] = request.questions
     const { name } = question
     const resolve = TCPClient({ dns: '1.1.1.1' })
     const result = await resolve(name)
