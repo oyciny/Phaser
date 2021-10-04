@@ -1,5 +1,5 @@
 const server = require('./config/server')
-const { TCPClient, Packet } = require('dns2')
+const request = require('./helpers/request.handler')
 
 server.on("listening", () => {
     console.log("Phaser is listening")
@@ -7,18 +7,7 @@ server.on("listening", () => {
 
 server.on('request', async (req, send, client) => {
     console.log(req.header.id, req.questions[0])
-    const response = Packet.createResponseFromRequest(req)
-    const [ question ] = req.questions
-    const { name } = question
-    const resolve = TCPClient({ dns: '1.1.1.1' })
-    const result = await resolve(name)
-    response.answers.push({
-        name,
-        type: Packet.TYPE.A,
-        class: Packet.CLASS.IN,
-        ttl: 300,
-        address: result.answers[0].address
-    })
+    const response = request(req)
     send(response)
 })
 
