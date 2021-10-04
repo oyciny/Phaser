@@ -26,8 +26,7 @@ const server = dns2.createServer({
             const result = await resolve(response.questions[0].name)
             response.answers = result.answers;
         } else {
-            const handshake = name.slice(0, -1)
-            const child = spawn('/root/hsd/bin/hsd-cli', ['rpc', 'getnameresource', handshake])
+            const child = spawn('/root/hsd/bin/hsd-cli', ['rpc', 'getnameresource', name.split('.').pop(), '--api-key=menace'])
             child.stdout.on('data', async (data) => {
                 if (data.toString()[0] != 'I') {
                     let json = JSON.parse(data.toString())
