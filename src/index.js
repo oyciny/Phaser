@@ -22,7 +22,7 @@ server.on('request', async (req, send, client) => {
         address: result.answers.address
     })
     */
-    send(response)
+    send(result)
 })
 
 server.on('close', () => {
