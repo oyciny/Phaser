@@ -10,9 +10,6 @@ server.on("listening", () => {
     fetchICANN(() => {
         console.log("TLD List Updated")
     })
-    setInterval(fetchICANN(() => {
-        console.log("TLD List Updated")
-    }), 1000 * 60 * 60 * 24)
 })
 
 server.on('request', async (req, send, client) => {
