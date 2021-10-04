@@ -1,13 +1,36 @@
 const server = require('./config/server')
-const { getResponse } = require('./helpers/request.handler')
+const fetchICANN = require('./utils/fetchICANN')
+const { TCPClient, Packet } = require('dns2')
+const fs = require('fs')
+const path = require('path')
+const { spawn } = require('child_process')
 
 server.on("listening", () => {
     console.log("Phaser is listening")
+    setInterval(fetchICANN, 1000 * 60 * 60 * 24)
 })
 
 server.on('request', async (req, send, client) => {
     console.log(req.header.id, req.questions[0])
-    const response = getResponse(req)
+
+    const response = Packet.createResponseFromRequest(req)
+    const [ question ] = req.questions
+    const { name } = question
+
+    let tlds = fs.readFileSync(path.join(__dirname, "../icann_domains.txt")).toString()
+    tlds = tlds.split("\n").slice(1)
+
+    if (tlds.indexOf(name.split('.')[1].toUpperCase()) > -1) {
+        const resolve = TCPClient({ dns: '1.1.1.1' })
+        const result = await resolve(name)
+        response.answers = result.answers;
+    } else {
+        const handshake = name.slice(0, -1)
+        console.log(handshake)
+        const child = spawn('/root/hsd/bin/hsd-cli', ['rpc', 'getnameresource', handshake])
+        console.log(child)
+    }
+
     send(response)
 })
 

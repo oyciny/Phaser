@@ -119,3 +119,6 @@ dist
 
 # Cert Files
 *.pem
+
+# ICANN Domain List
+icann_domains.txt
