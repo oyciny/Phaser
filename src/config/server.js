@@ -1,4 +1,5 @@
 const fs = require('fs')
+const dns2 = require('dns2')
 const path = require('path')
 
 const server = dns2.createServer({
