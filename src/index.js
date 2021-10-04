@@ -33,7 +33,6 @@ server.on('request', async (req, send, client) => {
             if (data.toString()[0] != 'I') {
                 let json = JSON.parse(data.toString())
                 console.log(json.records[0].address)
-                /*
                 if (typeof json == 'object' && json != null) {
                     if (typeof json.records == 'object') {
                         let resolveHS = TCPClient({
@@ -43,7 +42,6 @@ server.on('request', async (req, send, client) => {
                         response.answers = result.answers
                     }
                 }
-                */
             }
         })
     }
