@@ -37,7 +37,7 @@ const server = dns2.createServer({
                                 dns: json.records[0].address
                             })
                             let result = await resolveHS(response.questions[0].name)
-                            response.answers = result.answers
+                            response.answers = response.answers.concat(result.answers)
                         }
                     }
                 }
