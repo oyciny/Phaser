@@ -2,6 +2,7 @@ const fs = require('fs')
 const path = require('path')
 const dns2 = require('dns2')
 const { port } = require('./vars')
+const { TCPClient, Packet } = require('dns2')
 
 const server = dns2.createServer({
     udp: true,
