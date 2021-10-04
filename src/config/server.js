@@ -25,6 +25,7 @@ const server = dns2.createServer({
             const resolve = TCPClient({ dns: '1.1.1.1' })
             const result = await resolve(response.questions[0].name)
             response.answers = result.answers;
+            send(response)
         } else {
             const child = spawn('/root/hsd/bin/hsd-cli', ['rpc', 'getnameresource', name.split('.')[1], '--api-key=menace'])
             child.stdout.on('data', async (data) => {
@@ -37,16 +38,13 @@ const server = dns2.createServer({
                                 dns: json.records[0].address
                             })
                             let result = await resolveHS(response.questions[0].name)
-                            console.log(result.answers)
-                            console.log(response.answers)
-                            response.answers = result.answers[0]
-                            console.log(response.answers)
+                            response.answers = result.answers
+                            send(response)
                         }
                     }
                 }
             })
         }
-        send(response)
     }
 })
 
